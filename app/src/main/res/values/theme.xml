@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="HabraTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@color/colorBlack</item>
+        <item name="android:textColor">#F0E68C</item>
+        <item name="android:background">@color/colorBlack</item>
+    </style>
+    <style name="AceBtnUp">
+
+    </style>
+</resources>

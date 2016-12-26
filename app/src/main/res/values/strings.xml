@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Aceoface</string>
+    <string name="configs">Настройки</string>
+    <string name="btn_default">Обычное состояние</string>
+    <string name="save">Сохранить</string>
+    <string name="btn_active">Активное состояние</string>
+</resources>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:weightSum="1">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="226dp"
+        android:id="@+id/frame">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="225dp">
+
+            <TextView
+                android:text="Доступные устройства"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textInfo"
+                android:textSize="18sp"
+                android:layout_margin="10dp"
+                android:gravity="center" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="183dp"
+                android:id="@+id/deviceList" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <TextView
+            android:text="Интерфейс кнопок"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_down"
+                android:background="@android:color/transparent"
+                android:id="@+id/btnDefault"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="@string/btn_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvDefault"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_up"
+                android:background="@android:color/transparent"
+                android:id="@+id/btnPressed"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="@string/btn_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvPressed"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <Button
+            android:text="@string/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSave" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.eugene.theme"
+    android:installLocation="internalOnly">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.QUICKBOOT_POWERON" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/HabraTheme">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ConfigsActivity"
+            android:label="@string/configs"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".BroadRecStartBlue">
+            <intent-filter>
+                <action android:name="com.example.eugene.action.BROADCAST"/>
+                <action android:name="com.example.eugene.action.START_DEVICE_CONNECT"/>
+                <action android:name="com.example.eugene.action.START_DEVICE_RECONNECT"/>
+
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+                <action android:name="android.bluetooth.device.action.BOND_STATE_CHANGED" />
+                <action android:name="android.bluetooth.a2dp.profile.action.CONNECTION_STATE_CHANGED" />
+
+                <action android:name="android.bluetooth.adapter.action.ACL_CONNECTED" />
+                <action android:name="android.bluetooth.adapter.action.ACL_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".ServiceBluetooth"
+            android:enabled="true"
+            android:exported="true"></service>
+    </application>
+
+</manifest>
