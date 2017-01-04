@@ -4,21 +4,16 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.AppCompatDrawableManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
@@ -69,7 +64,6 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
 
         // Состояние и конфиг
-        btnStatus = (ImageButton) findViewById(R.id.btnStatus);
         btnConfig = (ImageButton) findViewById(R.id.btnConfig);
         btnConfig.setOnClickListener(this);
 
@@ -360,10 +354,10 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         MainActivity.this.runOnUiThread(new Runnable() {
             public void run() {
                 if (t.equals("1")){
-                    btnStatus.setColorFilter(getResources().getColor(R.color.colorConnect));
+                    btnConfig.setColorFilter(getResources().getColor(R.color.colorConnect));
                 }
                 if (t.equals("0")){
-                    btnStatus.setColorFilter(getResources().getColor(R.color.colorDisconnect));
+                    btnConfig.setColorFilter(getResources().getColor(R.color.colorDisconnect));
                 }
             }
         });
