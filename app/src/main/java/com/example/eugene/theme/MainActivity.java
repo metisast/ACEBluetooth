@@ -1,5 +1,6 @@
 package com.example.eugene.theme;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -7,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -14,10 +16,14 @@ import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MainActivity extends Activity implements View.OnClickListener, View.OnTouchListener, AsyncConnectBTdevice.BlueThread {
 
@@ -35,6 +41,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
     private static final String DEFAULT_COLOR= "#C6C7C7";
 
     Vibrator v;
+    Animation animAlpha;
 
     private List<ImageButton> imageButtons;
     private static final int[] BUTTON_IDS = {
@@ -46,7 +53,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
     /*ImageButton btnFLUp, btnFLDown, btnFRUp, btnFRDown, btnFAllUp, btnFAllDown;
     ImageButton btnRLUp, btnRLDown, btnRRUp, btnRRDown, btnRAllUp, btnRAllDown;
     ImageButton btnAllUp, btnAllDown;*/
-    ImageButton btnStatus, btnConfig;
+    ImageButton btnConfig;
 
     BroadcastReceiver broadcastReceiver;
     BluetoothAdapter bluetoothAdapter;
@@ -63,9 +70,25 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
 
+        // проверяем поддержку устройством Bluetooth
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)){
+            Toast.makeText(this, "BLUETOOTH NOT support", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, "Bluetooth is not supported on this hardware platform", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
         // Состояние и конфиг
         btnConfig = (ImageButton) findViewById(R.id.btnConfig);
         btnConfig.setOnClickListener(this);
+
+        // register animation
+        animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
 
         imageButtons = new ArrayList<ImageButton>();
         for (int id : BUTTON_IDS){
@@ -128,6 +151,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         ins = this;
         changeAllBtnColor();
 
+
     }
 
     @Override
@@ -161,6 +185,9 @@ public class MainActivity extends Activity implements View.OnClickListener, View
                 Intent intent = new Intent(this, ConfigsActivity.class);
                 startActivity(intent);
                 break;
+            /*case R.id.btnAllUp:
+                view.startAnimation(animAlpha);
+                Log.d(ACE_LOG, "Start anim");*/
         }
     }
 
