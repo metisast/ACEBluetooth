@@ -17,14 +17,16 @@ public class AsyncConnectBTdevice extends AsyncTask<Void, String, String>{
     ThreadConnected myThreadConnected;
     private BluetoothSocket bluetoothSocket = null;
     private BlueThread blueThread;
+    private BlueReconnect blueReconnect;
     Boolean status = false;
 
     final String UUID_STRING_WELL_KNOWN_SPP = "00001101-0000-1000-8000-00805F9B34FB"; // UUID устройства
     private UUID myUUID;
 
-    public AsyncConnectBTdevice(BluetoothDevice device, final BlueThread _blueThread) {
+    public AsyncConnectBTdevice(BluetoothDevice device, final BlueThread _blueThread, final BlueReconnect blueReconect) {
         bluetoothDevice = device;
         blueThread = _blueThread;
+        this.blueReconnect = blueReconect;
 
         myUUID = UUID.fromString(UUID_STRING_WELL_KNOWN_SPP);
 
@@ -59,6 +61,7 @@ public class AsyncConnectBTdevice extends AsyncTask<Void, String, String>{
 
             try {
                 bluetoothSocket.close();
+                blueReconnect.blueReconnect(true);
             }
 
             catch (IOException e1) {
@@ -84,6 +87,9 @@ public class AsyncConnectBTdevice extends AsyncTask<Void, String, String>{
             /* Передаем наш новый лист */
             if(blueThread!=null)
                 blueThread.getBluetoothWrite(myThreadConnected);
+                blueReconnect.blueReconnect(false);
+        } else {
+            blueReconnect.blueReconnect(true);
         }
 
         Log.d(ACE_LOG, result);
@@ -103,5 +109,9 @@ public class AsyncConnectBTdevice extends AsyncTask<Void, String, String>{
 
     public interface BlueThread{
         public void getBluetoothWrite(ThreadConnected myThreadConnected);
+    }
+
+    public interface BlueReconnect{
+        public void blueReconnect(boolean status);
     }
 }

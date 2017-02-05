@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MainActivity extends Activity implements View.OnClickListener, View.OnTouchListener, AsyncConnectBTdevice.BlueThread {
+public class MainActivity extends Activity implements View.OnClickListener, View.OnTouchListener, AsyncConnectBTdevice.BlueThread, AsyncConnectBTdevice.BlueReconnect {
 
     private static MainActivity ins;
 
@@ -151,13 +151,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         ins = this;
         changeAllBtnColor();
 
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+        if(myThreadConnected == null) {
             if (bluetoothAdapter.isEnabled()) {
                 // Считываем сохраненный MAC адрес устройства
                 SharedPreferences sPref = getSharedPreferences("MacFile", MODE_PRIVATE);
@@ -172,8 +166,13 @@ public class MainActivity extends Activity implements View.OnClickListener, View
                     sendBroadcast(intent);
                 }
             }
-            //Log.d(ACE_LOG, String.valueOf(savedText));
+        }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -348,7 +347,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
                         case R.id.btnAllDown:
                             byte[] bytesToSend13 = "l".getBytes();
                             myThreadConnected.write(bytesToSend13);
-                            imageButtons.get(12).setColorFilter(Color.parseColor(getBtnDefaultColor()));
+                            imageButtons.get(13).setColorFilter(Color.parseColor(getBtnDefaultColor()));
                             break;
                     }
                     break;
@@ -385,6 +384,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
                 }
                 if (t.equals("0")){
                     btnConfig.setColorFilter(getResources().getColor(R.color.colorDisconnect));
+                    myThreadConnected = null;
                 }
             }
         });
@@ -434,6 +434,30 @@ public class MainActivity extends Activity implements View.OnClickListener, View
             return savedText;
         }else{
             return "#3F51B5";
+        }
+    }
+
+    @Override
+    public void blueReconnect(boolean status) {
+        Log.d(ACE_LOG, "blueReconnect");
+        if(myThreadConnected == null) {
+            Log.d(ACE_LOG, "blueReconnect true");
+            if (status) {
+                if (bluetoothAdapter.isEnabled()) {
+                    // Считываем сохраненный MAC адрес устройства
+                    SharedPreferences sPref = getSharedPreferences("MacFile", MODE_PRIVATE);
+                    String savedText = sPref.getString(SAVED_TEXT, "");
+                    // Проверяем, есть ли в памяти MAC адрес
+                    if(!savedText.equals("")){
+                        BluetoothDevice bD = bluetoothAdapter.getRemoteDevice(savedText);
+
+                        //Запускаем ресивер
+                        Intent intent = new Intent(START_DEVICE_RECONNECT);
+                        intent.putExtra("bluetoothDevice", bD);
+                        sendBroadcast(intent);
+                    }
+                }
+            }
         }
     }
 }

@@ -46,7 +46,6 @@ public class BroadRecStartBlue extends BroadcastReceiver {
 
         // Перезапускаем сервис
         if(action.equals(START_DEVICE_RECONNECT)){
-            // Говорим сервису, что это первая настройка
             context.startService(intentService);
             Log.i(ACE_LOG, String.valueOf(bD));
         }
@@ -72,6 +71,7 @@ public class BroadRecStartBlue extends BroadcastReceiver {
                     // Меняем статус
                     MainActivity  .getInstace().updateStatusDraw("0");
                     Toast.makeText(context, "Соединение с устройством отсутствует", Toast.LENGTH_SHORT).show();
+                    context.startService(intentService);
                 } catch (Exception e) {
 
                 }

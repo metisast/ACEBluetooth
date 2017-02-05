@@ -54,7 +54,7 @@ public class ServiceBluetooth extends Service {
             ed.commit();
 
             // Запускаем поток на соединение
-            AsyncConnectBTdevice async = new AsyncConnectBTdevice(bD, MainActivity.getInstace());
+            AsyncConnectBTdevice async = new AsyncConnectBTdevice(bD, MainActivity.getInstace(), MainActivity.getInstace());
             async.execute();
         }else{
             // Считываем сохраненный MAC адрес устройства
@@ -64,7 +64,7 @@ public class ServiceBluetooth extends Service {
                 bD = bluetoothAdapter.getRemoteDevice(savedText);
 
                 // Запускаем поток на соединение
-                AsyncConnectBTdevice async = new AsyncConnectBTdevice(bD, MainActivity.getInstace());
+                AsyncConnectBTdevice async = new AsyncConnectBTdevice(bD, MainActivity.getInstace(), MainActivity.getInstace());
                 async.execute();
             }
         }
