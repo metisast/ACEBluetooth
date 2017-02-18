@@ -18,15 +18,17 @@ public class AsyncConnectBTdevice extends AsyncTask<Void, String, String>{
     private BluetoothSocket bluetoothSocket = null;
     private BlueThread blueThread;
     private BlueReconnect blueReconnect;
+    private BlueChangeStatus blueChangeStatus;
     Boolean status = false;
 
     final String UUID_STRING_WELL_KNOWN_SPP = "00001101-0000-1000-8000-00805F9B34FB"; // UUID устройства
     private UUID myUUID;
 
-    public AsyncConnectBTdevice(BluetoothDevice device, final BlueThread _blueThread, final BlueReconnect blueReconect) {
+    public AsyncConnectBTdevice(BluetoothDevice device, final BlueThread _blueThread, final BlueReconnect blueReconnect, final BlueChangeStatus blueChangeStatus) {
         bluetoothDevice = device;
         blueThread = _blueThread;
-        this.blueReconnect = blueReconect;
+        this.blueReconnect = blueReconnect;
+        this.blueChangeStatus = blueChangeStatus;
 
         myUUID = UUID.fromString(UUID_STRING_WELL_KNOWN_SPP);
 
@@ -88,6 +90,7 @@ public class AsyncConnectBTdevice extends AsyncTask<Void, String, String>{
             if(blueThread!=null)
                 blueThread.getBluetoothWrite(myThreadConnected);
                 blueReconnect.blueReconnect(false);
+                blueChangeStatus.blueChangeStatus(true);
         } else {
             blueReconnect.blueReconnect(true);
         }
@@ -107,11 +110,15 @@ public class AsyncConnectBTdevice extends AsyncTask<Void, String, String>{
         super.onProgressUpdate(values);
     }
 
-    public interface BlueThread{
+    public interface BlueThread {
         public void getBluetoothWrite(ThreadConnected myThreadConnected);
     }
 
-    public interface BlueReconnect{
+    public interface BlueReconnect {
         public void blueReconnect(boolean status);
+    }
+
+    public interface BlueChangeStatus {
+        public void blueChangeStatus(boolean status);
     }
 }

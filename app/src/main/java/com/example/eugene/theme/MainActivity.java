@@ -25,7 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MainActivity extends Activity implements View.OnClickListener, View.OnTouchListener, AsyncConnectBTdevice.BlueThread, AsyncConnectBTdevice.BlueReconnect {
+public class MainActivity extends Activity implements View.OnClickListener,
+        View.OnTouchListener, AsyncConnectBTdevice.BlueThread, AsyncConnectBTdevice.BlueReconnect, AsyncConnectBTdevice.BlueChangeStatus {
 
     private static MainActivity ins;
 
@@ -458,6 +459,15 @@ public class MainActivity extends Activity implements View.OnClickListener, View
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void blueChangeStatus(boolean status) {
+        if (status) {
+            btnConfig.setColorFilter(getResources().getColor(R.color.colorConnect));
+        } else {
+            btnConfig.setColorFilter(getResources().getColor(R.color.colorDisconnect));
         }
     }
 }
