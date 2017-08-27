@@ -22,15 +22,15 @@
             android:layout_centerHorizontal="true"
             android:gravity="center|top">
 
-                <android.support.v7.widget.AppCompatImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_up"
-                    android:id="@+id/btnAllUp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="40dp"/>
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/btnAllUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@drawable/ic_up" />
 
-                <LinearLayout
+            <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
